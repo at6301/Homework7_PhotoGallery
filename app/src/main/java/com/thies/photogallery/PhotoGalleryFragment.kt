@@ -42,7 +42,7 @@ class PhotoGalleryFragment : Fragment() {
                 val response = PhotoRepository().fetchPhotos()
                 Log.d(TAG, "Response received: $response")
             } catch(ex: Exception) {
-                android.util.Log.d(TAG, "Failed to fetch gallery items", ex)
+                Log.d(TAG, "Failed to fetch gallery items", ex)
             }
 
         }

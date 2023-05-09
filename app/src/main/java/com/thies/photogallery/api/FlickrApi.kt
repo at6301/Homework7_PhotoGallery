@@ -2,7 +2,7 @@ package com.thies.photogallery.api
 
 import retrofit2.http.GET
 
-private const val API_KEY = "90a09b600afd1594f2d093de8719eaab"
+private const val API_KEY = "6acbc8486ffcf810f03d38a1907d6854"
 
 interface FlickrApi {
     @GET(
