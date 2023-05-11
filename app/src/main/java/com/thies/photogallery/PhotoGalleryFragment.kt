@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
 import com.thies.photogallery.api.FlickrApi
 import com.thies.photogallery.databinding.FragementPhotoGalleryBinding
@@ -23,6 +26,8 @@ class PhotoGalleryFragment : Fragment() {
             "Cannot access binding because it is null. Is the view visible?"
         }
 
+    private val photoGalleryViewModel: PhotoGalleryViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -38,11 +43,18 @@ class PhotoGalleryFragment : Fragment() {
 
         // launch a coroutine using the viewLifecycleOwner.lifecycleScope property
         viewLifecycleOwner.lifecycleScope.launch {
-            try{
+            /*try{
                 val response = PhotoRepository().fetchPhotos()
                 Log.d(TAG, "Response received: $response")
             } catch(ex: Exception) {
                 Log.d(TAG, "Failed to fetch gallery items", ex)
+            }*/
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                photoGalleryViewModel.galleryItems.collect {
+                    items ->
+                    //Log.d(TAG, "Response received: $items")
+                    binding.photoGrid.adapter = PhotoListAdapter(items)
+                }
             }
 
         }
